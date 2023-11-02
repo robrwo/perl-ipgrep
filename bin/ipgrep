@@ -1,0 +1,89 @@
+#!/usr/bin/env perl
+
+use v5.18;
+use warnings;
+
+use Getopt::Long::Descriptive;
+use IO::File;
+use IO::Uncompress::Gunzip;
+use List::Util qw( any );
+use Net::CIDR;
+
+my ( $opt, $usage ) = describe_options(
+    '%c %o [patterns] [files]',
+    [],
+    [ 'invert-match|v'           => 'Invert the sense of matching, to select non-matching lines' ],
+    [ 'match-first-character|1!' => 'Match IP address from the first character of the line only' ],
+    [
+        'filename' => 'hidden' => {
+            one_of => [
+                [ 'with-filename|H' => 'Print the file name for each match' ],
+                [ 'no-filename|h'   => 'Suppress the prefixing of file names on output' ],
+            ]
+        }
+    ],
+    [ 'file|f=s' => 'Obtain CIDRs from a file, one per line' ],
+    [],
+    [ 'help' => 'Print usage and exit' ],
+
+);
+
+die $usage if $opt->help;
+
+my @patterns;
+
+if ( my $file = $opt->file ) {
+
+    my $fh = IO::File->new($file);
+    while ( my $line = $fh->getline ) {
+        chomp($line);
+        my $cidr = Net::CIDR::cidrvalidate($line) or next;
+        push @patterns, $cidr;
+    }
+}
+else {
+    my $pattern = shift @ARGV                       or die $usage;
+    my $cidr    = Net::CIDR::cidrvalidate($pattern) or die $usage;
+    push @patterns, $cidr;
+}
+
+my $re = make_regexp($opt);
+
+my @files = @ARGV;
+push @files, "-" unless @files;
+
+unless ( $opt->filename ) {
+    $opt->{filename}         = @files > 1 ? "with_filename" : "no_filename";
+    $opt->{$_}               = 0 for qw( with_filename no_filename );
+    $opt->{ $opt->filename } = 1;
+}
+
+for my $file (@files) {
+
+    my $class = $file =~ /\.gz\z/ ? "IO::Uncompress::Gunzip" : "IO::File";
+    my $fh    = $class->new($file) or die "$!: $file\n";
+
+    my $callback = $opt->with_filename ? sub { print "${file}:" . $_[0] } : sub { print $_[0] };
+
+    match_file( $opt, $re, $fh, $callback );
+}
+
+sub match_file {
+    my ( $opt, $re, $fh, $callback ) = @_;
+    while ( my $line = <$fh> ) {
+        my @ips     = grep defined, map { Net::CIDR::cidrvalidate($_) } ( $line =~ m/${re}/g ) or next;
+        my $matched = any { Net::CIDR::cidrlookup( $_, @patterns ) } @ips;
+        next unless !!$matched ne !!$opt->invert_match;
+        $callback->($line);
+    }
+}
+
+sub make_regexp {
+    my ($opt) = @_;
+    # This is based on code from Regexp::Common::net
+    my $dec   = q{(?:25[0-5]|2[0-4][0-9]|[0-1]?[0-9]{1,2})};
+    my $ip4   = "(?:${dec}\.){3}${dec}";
+    my $start = $opt->match_first_character ? '^' : '\b';
+    my $re    = $start . '(' . $ip4 . ')\b';
+    return qr/${re}/;
+}
