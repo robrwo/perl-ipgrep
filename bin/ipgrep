@@ -14,6 +14,7 @@ my ( $opt, $usage ) = describe_options(
     '%c %o [patterns] [files]',
     [],
     [ 'invert-match|v'           => 'Invert the sense of matching, to select non-matching lines' ],
+    [ 'line-number|n'            => 'Prefix each line of output with the 1-based line number within its input file' ],
     [ 'match-first-character|1!' => 'Match IP address from the first character of the line only' ],
     [
         'filename' => 'hidden' => {
@@ -60,6 +61,7 @@ unless ( $opt->filename ) {
 }
 
 my $cb_pattern = '$_[2]';
+$cb_pattern = '$_[0]->input_line_number . ":" . ' . $cb_pattern if $opt->line_number;
 $cb_pattern = '$_[1] . ":" . ' . $cb_pattern if $opt->with_filename;
 
 my $callback = qsub 'print ' . $cb_pattern;
