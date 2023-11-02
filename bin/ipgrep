@@ -10,6 +10,8 @@ use List::Util qw( any );
 use Net::CIDR;
 use Sub::Quote qw( qsub );
 
+our $VERSION = 'v0.1.0';
+
 my ( $opt, $usage ) = describe_options(
     '%c %o [patterns] [files]',
     [],
@@ -29,9 +31,14 @@ my ( $opt, $usage ) = describe_options(
     ],
     [ 'file|f=s' => 'obtain CIDRs from a file, one per line' ],
     [],
+    [ 'version|V' => 'print the version and exit' ],
     [ 'help' => 'print usage and exit' ],
 
 );
+
+if ($opt->version) {
+    say "iprep ${VERSION}";
+}
 
 die $usage if $opt->help;
 
