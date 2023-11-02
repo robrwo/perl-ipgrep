@@ -14,6 +14,8 @@ my ( $opt, $usage ) = describe_options(
     '%c %o [patterns] [files]',
     [],
     [ 'count|c'                  => 'Suppress normal output; instead print a count of matching lines for each input file' ],
+    [ 'files-without-match|L'    => 'Suppress normal output; instead print the name of each input file from which no output would normally have been printed' ],
+    [ 'files-with-match|l'       => 'Suppress normal output; instead print the name of each input file from which output would normally have been printed' ],
     [ 'invert-match|v'           => 'Invert the sense of matching, to select non-matching lines' ],
     [ 'line-number|n'            => 'Prefix each line of output with the 1-based line number within its input file' ],
     [ 'match-first-character|1!' => 'Match IP address from the first character of the line only' ],
@@ -71,7 +73,11 @@ unless ( $opt->count ) {
 }
 
 my $post;
-if ( $opt->count ) {
+if ( $opt->files_with_match || $opt->files_without_match ) {
+    my $pattern = '$_[0]';
+    $post = qsub 'say ' . $pattern;
+}
+elsif ( $opt->count ) {
     my $pattern = '$_[1]';
     $pattern = '$_[0] . ":" . ' . $pattern if $opt->with_filename;
     $post = qsub 'say ' . $pattern;
@@ -84,6 +90,7 @@ for my $file (@files) {
     my $fh    = $class->new($file) or die "$!: $file\n";
 
     my $count = match_file( $opt, $re, $fh, $file, $callback );
+    next if ($opt->files_with_match && !$count) || ($opt->files_without_match && $count);
     $post->( $file, $count ) if $post;
 
 }
@@ -96,6 +103,7 @@ sub match_file {
         my $matched = any { Net::CIDR::cidrlookup( $_, @patterns ) } @ips;
         next unless !!$matched ne !!$opt->invert_match;
         $count++;
+        last if $opt->files_with_match || $opt->files_without_match;
         $callback->($fh, $file, $line) if $callback;
     }
     return $count;
