@@ -1,5 +1,35 @@
 #!/usr/bin/env perl
 
+=head1 NAME
+
+ipgrep - grep files by CIDR
+
+=head1 SYNOPSIS
+
+    ipgrep [-1cfHhLlnVv] [long options...] [patterns] [files]
+
+=head1 DESCRIPTION
+
+This program will print lines from a file that matches IP4 addresses in the given netblocks.
+
+Many of the options mirror similar options from L<grep>.
+
+=head1 SEE ALSO
+
+L<grep>
+
+=head1 AUTHOR
+
+Robert Rothenberg <rrwo@cpan.org>
+
+=head1 COPYRIGHT AND LICENCE
+
+This software is copyright (c) 2023 by Robert Rothenberg.
+
+This is free software, licensed under The Artistic License 2.0 (GPL Compatible).
+
+=cut
+
 use v5.18;
 use warnings;
 
