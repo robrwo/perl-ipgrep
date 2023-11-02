@@ -13,23 +13,23 @@ use Sub::Quote qw( qsub );
 my ( $opt, $usage ) = describe_options(
     '%c %o [patterns] [files]',
     [],
-    [ 'count|c'                  => 'Suppress normal output; instead print a count of matching lines for each input file' ],
-    [ 'files-without-match|L'    => 'Suppress normal output; instead print the name of each input file from which no output would normally have been printed' ],
-    [ 'files-with-match|l'       => 'Suppress normal output; instead print the name of each input file from which output would normally have been printed' ],
-    [ 'invert-match|v'           => 'Invert the sense of matching, to select non-matching lines' ],
-    [ 'line-number|n'            => 'Prefix each line of output with the 1-based line number within its input file' ],
-    [ 'match-first-character|1!' => 'Match IP address from the first character of the line only' ],
+    [ 'count|c'                  => 'print a count of matching lines for each input file' ],
+    [ 'files-without-match|L'    => 'print the name of each input file from which no output would normally have been printed' ],
+    [ 'files-with-match|l'       => 'print the name of each input file from which output would normally have been printed' ],
+    [ 'invert-match|v'           => 'invert the sense of matching, to select non-matching lines' ],
+    [ 'line-number|n'            => 'prefix each line of output with the line number within its input file' ],
+    [ 'match-first-character|1!' => 'match IP address from the first character of the line only' ],
     [
         'filename' => 'hidden' => {
             one_of => [
-                [ 'with-filename|H' => 'Print the file name for each match' ],
-                [ 'no-filename|h'   => 'Suppress the prefixing of file names on output' ],
+                [ 'with-filename|H' => 'print the file name for each match' ],
+                [ 'no-filename|h'   => 'suppress the prefixing of file names on output' ],
             ]
         }
     ],
-    [ 'file|f=s' => 'Obtain CIDRs from a file, one per line' ],
+    [ 'file|f=s' => 'obtain CIDRs from a file, one per line' ],
     [],
-    [ 'help' => 'Print usage and exit' ],
+    [ 'help' => 'print usage and exit' ],
 
 );
 
