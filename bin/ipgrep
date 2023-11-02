@@ -40,7 +40,7 @@ use List::Util qw( any );
 use Net::CIDR;
 use Sub::Quote qw( qsub );
 
-our $VERSION = 'v0.1.0';
+our $VERSION = 'v0.1.1';
 
 my ( $opt, $usage ) = describe_options(
     '%c %o [patterns] [files]',
