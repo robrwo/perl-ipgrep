@@ -1,5 +1,10 @@
 Revision history for ipgrap
 
+  [Enhancements]
+  - Returns exit code of 0 if there is a match, 1 if no match.
+
+  - Add support for the --quiet option (GH#2).
+
 v0.1.1   2023-11-02 22:42:15 Europe/London
   [Documentation]
   - Added missing Changes.

@@ -60,6 +60,7 @@ my ( $opt, $usage ) = describe_options(
         }
     ],
     [ 'file|f=s' => 'obtain CIDRs from a file, one per line' ],
+    [ 'quiet|silent|q' => 'do not output anything, exit immediately with zero status if any match is found' ],
     [],
     [ 'version|V' => 'print the version and exit' ],
     [ 'help' => 'print usage and exit' ],
@@ -120,6 +121,11 @@ elsif ( $opt->count ) {
     $post = qsub 'say ' . $pattern;
 }
 
+if ( $opt->quiet ) {
+    $callback = $post = sub { };
+}
+
+my $matched = 0;
 
 for my $file (@files) {
 
@@ -127,10 +133,14 @@ for my $file (@files) {
     my $fh    = $class->new($file) or die "$!: $file\n";
 
     my $count = match_file( $opt, $re, $fh, $file, $callback );
+    $matched ||= !!$count;
+    exit(0) if $opt->quiet && $matched;
     next if ($opt->files_with_match && !$count) || ($opt->files_without_match && $count);
     $post->( $file, $count ) if $post;
 
 }
+
+exit( $matched ? 0 : 1 );
 
 sub match_file {
     my ( $opt, $re, $fh, $file, $callback ) = @_;
