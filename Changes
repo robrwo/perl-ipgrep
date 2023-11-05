@@ -4,6 +4,9 @@ v0.2.1
   [Documentation]
   - Explicitly note that this only matches dotted decimal IP4 addresses.
 
+  [Tests]
+  - Added tests.
+
 v0.2.0   2023-11-04 16:52:30 Europe/London
   [Enhancements]
   - Returns exit code of 0 if there is a match, 1 if no match.
