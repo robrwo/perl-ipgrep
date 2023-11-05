@@ -8,7 +8,7 @@ ipgrep - grep files by CIDR
 
 # DESCRIPTION
 
-This program will print lines from a file that matches IP4 addresses in the given netblocks.
+This program will print lines from a file that matches dotted decimal IP4 addresses in the given netblocks.
 
 Many of the options mirror similar options from [grep](https://metacpan.org/pod/grep).
 

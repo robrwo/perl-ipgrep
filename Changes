@@ -1,5 +1,9 @@
 Revision history for ipgrap
 
+v0.2.3    2023-11-05 18:07:30 Europe/London
+  [Documentation]
+  - Update README from POD changes in v0.2.1.
+
 v0.2.2    2023-11-05 18:03:30 Europe/London
   [Bug Fixes]
   - The --version option exits properly.
