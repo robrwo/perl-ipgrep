@@ -1,6 +1,6 @@
 Revision history for ipgrap
 
-v0.2.1
+v0.2.1    2023-11-05 17:58:30 Europe/London
   [Documentation]
   - Explicitly note that this only matches dotted decimal IP4 addresses.
 
