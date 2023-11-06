@@ -10,7 +10,7 @@ ipgrep - grep files by CIDR
 
 =head1 DESCRIPTION
 
-This program will print lines from a file that matches dotted decimal IP4 addresses in the given netblocks.
+This program will print lines from a file that matches IP addresses in the given netblocks.
 
 Many of the options mirror similar options from L<grep>.
 
@@ -37,10 +37,10 @@ use Getopt::Long::Descriptive;
 use IO::File;
 use IO::Uncompress::Gunzip;
 use List::Util qw( any );
-use Net::CIDR;
+use NetAddr::IP;
 use Sub::Quote qw( qsub );
 
-our $VERSION = 'v0.2.2';
+our $VERSION = 'v0.3.0';
 
 my ( $opt, $usage ) = describe_options(
     '%c %o [patterns] [files]',
@@ -81,14 +81,12 @@ if ( my $file = $opt->file ) {
     my $fh = IO::File->new($file);
     while ( my $line = $fh->getline ) {
         chomp($line);
-        my $cidr = Net::CIDR::cidrvalidate($line) or next;
-        push @patterns, $cidr;
+        push @patterns, $line;
     }
 }
 else {
     my $pattern = shift @ARGV                       or die $usage;
-    my $cidr    = Net::CIDR::cidrvalidate($pattern) or die $usage;
-    push @patterns, $cidr;
+    push @patterns, $pattern;
 }
 
 my $re = make_regexp($opt);
@@ -147,8 +145,7 @@ sub match_file {
     my ( $opt, $re, $fh, $file, $callback ) = @_;
     my $count = 0;
     while ( my $line = <$fh> ) {
-        my @ips     = grep defined, map { Net::CIDR::cidrvalidate($_) } ( $line =~ m/${re}/g ) or next;
-        my $matched = any { Net::CIDR::cidrlookup( $_, @patterns ) } @ips;
+        my $matched = any { defined($_) } ( $line =~ m/${re}/g );
         next unless !!$matched ne !!$opt->invert_match;
         $count++;
         last if $opt->files_with_match || $opt->files_without_match;
@@ -159,10 +156,8 @@ sub match_file {
 
 sub make_regexp {
     my ($opt) = @_;
-    # This is based on code from Regexp::Common::net
-    my $dec   = q{(?:25[0-5]|2[0-4][0-9]|[0-1]?[0-9]{1,2})};
-    my $ip4   = "(?:${dec}\.){3}${dec}";
+    my $ips   = join("|", map { NetAddr::IP->new($_)->re } @patterns );
     my $start = $opt->match_first_character ? '^' : '\b';
-    my $re    = $start . '(' . $ip4 . ')\b';
+    my $re    = $start . '(' . $ips . ')\b';
     return qr/${re}/;
 }
