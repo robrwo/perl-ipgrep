@@ -1,7 +1,9 @@
-Revision history for ipgrap
+Revision history for ipgrep
 
   [Documentation]
   - Fixed copyright year in the LICENSE.
+
+  - Fixed typo in Changes.
 
 v0.3.0    2023-11-06 13:17:30 Europe/London
   [Enhancements]
