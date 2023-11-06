@@ -1,5 +1,8 @@
 Revision history for ipgrap
 
+  [Documentation]
+  - Fixed copyright year in the LICENSE.
+
 v0.3.0    2023-11-06 13:17:30 Europe/London
   [Enhancements]
   - Use NetAddr::IP to generate the regular expressions for specific netblocks. This implicitly adds support for IP6
