@@ -5,6 +5,9 @@ v0.3.0
   - Use NetAddr::IP to generate the regular expressions for specific netblocks. This implicitly adds support for IP6
     addresses (GH#1). Thanks andrew@cpan.org.
 
+  [Tests]
+  - Add more tests.
+
 v0.2.3    2023-11-05 18:07:30 Europe/London
   [Documentation]
   - Update README from POD changes in v0.2.1.

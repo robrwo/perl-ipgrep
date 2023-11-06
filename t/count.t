@@ -43,6 +43,10 @@ script_runs( [qw( bin/ipgrep -c -l 192.168.0.3 t/data/file1.txt t/data/file2.txt
 script_stdout_is "t/data/file2.txt
 ", "only files with match, overrides count";
 
+script_runs( [qw( bin/ipgrep -cv 192.168.0.2 t/data/file1.txt )]);
+
+script_stdout_is "3
+", "count (one file, inverted)";
 
 
 done_testing;
