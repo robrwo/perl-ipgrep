@@ -15,3 +15,6 @@ t/no-filename.t
 t/quiet.t
 t/version.t
 t/with-filename.t
+t/data/file1.txt
+t/data/file2.txt
+t/data/list.txt
