@@ -16,7 +16,7 @@ WriteMakefile(
         'Sub::Quote'                => '2.003000',
         'warnings'                  => 0,
     },
-    TEST_REQUIES => {
+    TEST_REQUIRES => {
         'Test2::V0'    => 0,
         'Test::Script' => 0,
     },
