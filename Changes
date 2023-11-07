@@ -1,16 +1,19 @@
 Revision history for ipgrep
 
-  [Toolchain]
-  - Add LICENSE to the MANIFEST.
+  [Documentation]
+  - Fixed grammar in the Changes.
 
-  - Add MANIFEST.SKIP.
+  [Toolchain]
+  - Added LICENSE to the MANIFEST.
+
+  - Added MANIFEST.SKIP.
 
 v0.4.2    2023-11-07 19:23:30 Europe/London
   [Documentation]
-  - Add links to git repository and bug tracker.
+  - Added links to git repository and bug tracker.
 
   [Tests]
-  - Add missing data files to the MANIFEST.
+  - Added missing data files to the MANIFEST.
 
 v0.4.1    2023-11-07 16:51:30 Europe/London
   [Bug Fixes]
