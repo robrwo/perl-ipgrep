@@ -1,5 +1,8 @@
 Revision history for ipgrep
 
+  [Documentation]
+  - Add links to git repository and bug tracker.
+
   [Tests]
   - Add missing data files to the MANIFEST.
 

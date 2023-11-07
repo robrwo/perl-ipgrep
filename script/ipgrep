@@ -18,6 +18,20 @@ Many of the options mirror similar options from L<grep>.
 
 L<grep>
 
+=head1 SOURCE
+
+The development version is on github at L<https://github.com/robrwo/perl-ipgrep> and may be cloned from
+L<git://github.com:robrwo/perl-ipgrep.git>.
+
+=head1 BUGS
+
+Please report any bugs or feature requests on the bugtracker website
+L<https://github.com/robrwo/perl-ipgrep/issues>.
+
+When submitting a bug or request, please include a test-file or a
+patch to an existing test-file that illustrates the bug or desired
+feature.
+
 =head1 AUTHOR
 
 Robert Rothenberg <rrwo@cpan.org>
