@@ -1,0 +1,8 @@
+MYMETA\.
+Makefile$
+\.bak$
+\.git/
+\.gitignore
+\.test-script.*/
+ipgrep-v.*\.tar\.gz
+tmp/

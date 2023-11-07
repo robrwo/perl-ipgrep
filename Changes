@@ -1,7 +1,9 @@
 Revision history for ipgrep
 
-  [Other]
+  [Toolchain]
   - Add LICENSE to the MANIFEST.
+
+  - Add MANIFEST.SKIP.
 
 v0.4.2    2023-11-07 19:23:30 Europe/London
   [Documentation]
