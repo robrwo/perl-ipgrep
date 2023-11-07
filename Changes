@@ -1,5 +1,8 @@
 Revision history for ipgrep
 
+  [Enhancements]
+  - Added Makefile.PL to enable easier build and installation.
+
   [Documentation]
   - Fixed copyright year in the LICENSE.
 
