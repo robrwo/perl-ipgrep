@@ -54,7 +54,7 @@ use List::Util qw( any );
 use NetAddr::IP;
 use Sub::Quote qw( qsub );
 
-our $VERSION = 'v0.4.2';
+our $VERSION = 'v0.4.3';
 
 my ( $opt, $usage ) = describe_options(
     '%c %o [patterns] [files]',
