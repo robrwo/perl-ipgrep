@@ -1,5 +1,8 @@
 Revision history for ipgrep
 
+  [Other]
+  - Add LICENSE to the MANIFEST.
+
 v0.4.2    2023-11-07 19:23:30 Europe/London
   [Documentation]
   - Add links to git repository and bug tracker.

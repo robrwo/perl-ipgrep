@@ -3,6 +3,7 @@ Makefile.PL
 script/ipgrep
 Changes
 README.md
+LICENSE
 t/01-no-options.t
 t/count.t
 t/files-with-match.t
