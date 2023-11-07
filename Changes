@@ -1,5 +1,6 @@
 Revision history for ipgrep
 
+v0.4.0    2023-11-07 16:48:30 Europe/London
   [Enhancements]
   - Added Makefile.PL to enable easier build and installation.
 
