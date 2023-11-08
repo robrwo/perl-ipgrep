@@ -4,5 +4,7 @@ Makefile$
 \.git/
 \.gitignore
 \.test-script.*/
+blib
 ipgrep-v.*\.tar\.gz
+pm_to_blib
 tmp/

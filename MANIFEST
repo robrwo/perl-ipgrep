@@ -10,13 +10,17 @@ t/count.t
 t/data/file1.txt
 t/data/file2.txt
 t/data/list.txt
+t/data/rdns.txt
+t/exclude-final-dot.t
 t/file.t
 t/files-with-match.t
 t/files-without-match.t
 t/invert-match.t
+t/label.t
 t/line-number.t
 t/match-first-character.t
 t/no-filename.t
+t/only-matching.t
 t/quiet.t
 t/version.t
 t/with-filename.t
