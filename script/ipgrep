@@ -77,6 +77,7 @@ my ( $opt, $usage ) = describe_options(
     ],
     [ 'file|f=s' => 'obtain CIDRs from a file, one per line' ],
     [ 'quiet|silent|q' => 'do not output anything, exit immediately with zero status if any match is found' ],
+    [ 'exclude-final-dot!' => 'exclude matches with a final dot' ],
     [],
     [ 'version|V' => 'print the version and exit' ],
     [ 'help' => 'print usage and exit' ],
@@ -174,6 +175,7 @@ sub make_regexp {
     my ($opt) = @_;
     my $ips   = join("|", map { NetAddr::IP->new($_)->re } @patterns );
     my $start = $opt->match_first_character ? '^' : '\b';
+    $ips .= '(?!\.)' if $opt->exclude_final_dot;
     my $re    = $start . '(' . $ips . ')\b';
     return qr/${re}/;
 }
