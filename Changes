@@ -9,6 +9,8 @@ v0.4.3
 
   - Added MANIFEST.SKIP.
 
+  - Added missing metadata to Makefile.PL.
+
 v0.4.2    2023-11-07 19:23:30 Europe/London
   [Documentation]
   - Added links to git repository and bug tracker.
