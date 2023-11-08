@@ -1,5 +1,6 @@
 Revision history for ipgrep
 
+v0.5.0
   [Enhancements]
   - Added --exclude-final-dot option.
 
