@@ -4,6 +4,8 @@ v0.4.3
   [Documentation]
   - Fixed grammar in the Changes.
 
+  - Added grepcidr to SEE ALSO.
+
   [Toolchain]
   - Added LICENSE to the MANIFEST.
 

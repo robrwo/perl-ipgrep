@@ -18,6 +18,8 @@ Many of the options mirror similar options from L<grep>.
 
 L<grep>
 
+L<grepcidr|https://www.pc-tools.net/unix/grepcidr/>
+
 =head1 SOURCE
 
 The development version is on github at L<https://github.com/robrwo/perl-ipgrep> and may be cloned from

@@ -16,6 +16,8 @@ Many of the options mirror similar options from [grep](https://metacpan.org/pod/
 
 [grep](https://metacpan.org/pod/grep)
 
+[grepcidr](https://www.pc-tools.net/unix/grepcidr/)
+
 # SOURCE
 
 The development version is on github at [https://github.com/robrwo/perl-ipgrep](https://github.com/robrwo/perl-ipgrep) and may be cloned from
