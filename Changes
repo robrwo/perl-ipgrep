@@ -1,6 +1,6 @@
 Revision history for ipgrep
 
-v0.5.0
+v0.5.0    2023-11-08 21:16:30 Europe/London
   [Enhancements]
   - Added --exclude-final-dot option.
 
