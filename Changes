@@ -6,6 +6,8 @@ v0.4.3
 
   - Added grepcidr to SEE ALSO.
 
+  - Fixed link for GNU grep in SEE ALSO.
+
   [Toolchain]
   - Added LICENSE to the MANIFEST.
 

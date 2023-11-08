@@ -14,7 +14,7 @@ Many of the options mirror similar options from [grep](https://metacpan.org/pod/
 
 # SEE ALSO
 
-[grep](https://metacpan.org/pod/grep)
+[grep](https://www.gnu.org/software/grep/)
 
 [grepcidr](https://www.pc-tools.net/unix/grepcidr/)
 
