@@ -75,6 +75,7 @@ my ( $opt, $usage ) = describe_options(
             ]
         }
     ],
+    [ 'label=s'  => 'display input from stdin as coming from label', { default => '(standard input)' } ],
     [ 'file|f=s' => 'obtain CIDRs from a file, one per line' ],
     [ 'only-matching|o' => 'show only nonempty parts of lines that match' ],
     [ 'quiet|silent|q' => 'do not output anything, exit immediately with zero status if any match is found' ],
@@ -159,8 +160,8 @@ for my $file (@files) {
 
     my $class = $file =~ /\.gz\z/ ? "IO::Uncompress::Gunzip" : "IO::File";
     my $fh    = $class->new($file) or die "$!: $file\n";
-
-    my $count = match_file( $opt, $re, $fh, $file, $callback );
+    my $label = $file eq "-" ? $opt->label : $file;
+    my $count = match_file( $opt, $re, $fh, $label, $callback );
     $matched ||= !!$count;
     exit(0) if $opt->quiet && $matched;
     next if ($opt->files_with_match && !$count) || ($opt->files_without_match && $count);

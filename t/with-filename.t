@@ -27,4 +27,10 @@ script_stdout_is "t/data/file1.txt:192.168.0.2 x
 t/data/file2.txt:192.168.0.2 x
 ", "with filenames (multiple files)";
 
+script_runs( [qw( script/ipgrep --with-filename --label=foo 192.168.0.2 t/data/file1.txt t/data/file2.txt )]);
+
+script_stdout_is "t/data/file1.txt:192.168.0.2 x
+t/data/file2.txt:192.168.0.2 x
+", "with filenames (multiple files, label ignored)";
+
 done_testing;
