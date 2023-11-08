@@ -76,6 +76,7 @@ my ( $opt, $usage ) = describe_options(
         }
     ],
     [ 'file|f=s' => 'obtain CIDRs from a file, one per line' ],
+    [ 'only-matching|o' => 'show only nonempty parts of lines that match' ],
     [ 'quiet|silent|q' => 'do not output anything, exit immediately with zero status if any match is found' ],
     [ 'exclude-final-dot!' => 'exclude matches with a final dot' ],
     [],
@@ -120,9 +121,18 @@ unless ( $opt->filename ) {
 my $callback;
 
 unless ( $opt->count ) {
-    my $cb_pattern = '$_[2]';
-    $cb_pattern = '$_[0]->input_line_number . ":" . ' . $cb_pattern if $opt->line_number;
-    $cb_pattern = '$_[1] . ":" . ' . $cb_pattern if $opt->with_filename;
+    my $cb_pattern;
+    if ( $opt->only_matching ) {
+        my $prefix = '""';
+        $prefix = '$_[0]->input_line_number . ":"' if $opt->line_number;
+        $prefix = '$_[1] . ":" . ' . $prefix if $opt->with_filename;
+        $cb_pattern = 'defined($_[3][0]) ? join("\n", map { ' . $prefix . ' . $_ } @{$_[3]}) . "\n" : ""';
+    }
+    else {
+        $cb_pattern = '$_[2]';
+        $cb_pattern = '$_[0]->input_line_number . ":" . ' . $cb_pattern if $opt->line_number;
+        $cb_pattern = '$_[1] . ":" . ' . $cb_pattern if $opt->with_filename;
+    }
     $callback = qsub 'print ' . $cb_pattern;
 }
 
@@ -143,6 +153,8 @@ if ( $opt->quiet ) {
 
 my $matched = 0;
 
+my $match_fn = $opt->only_matching ? sub { [ grep defined, @_ ] } : sub { any { defined($_) } @_ };
+
 for my $file (@files) {
 
     my $class = $file =~ /\.gz\z/ ? "IO::Uncompress::Gunzip" : "IO::File";
@@ -162,11 +174,11 @@ sub match_file {
     my ( $opt, $re, $fh, $file, $callback ) = @_;
     my $count = 0;
     while ( my $line = <$fh> ) {
-        my $matched = any { defined($_) } ( $line =~ m/${re}/g );
+        my $matched = $match_fn->( $line =~ m/${re}/g );
         next unless !!$matched ne !!$opt->invert_match;
         $count++;
         last if $opt->files_with_match || $opt->files_without_match;
-        $callback->($fh, $file, $line) if $callback;
+        $callback->($fh, $file, $line, $matched) if $callback;
     }
     return $count;
 }
