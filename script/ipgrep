@@ -53,6 +53,7 @@ use Getopt::Long::Descriptive;
 use IO::File;
 use IO::Uncompress::Gunzip;
 use List::Util qw( any );
+use Net::CIDR qw( cidrvalidate range2cidr );
 use NetAddr::IP;
 use Sub::Quote qw( qsub );
 
@@ -80,6 +81,7 @@ my ( $opt, $usage ) = describe_options(
     [ 'only-matching|o' => 'show only nonempty parts of lines that match' ],
     [ 'quiet|silent|q' => 'do not output anything, exit immediately with zero status if any match is found' ],
     [ 'exclude-final-dot!' => 'exclude matches with a final dot' ],
+    [ 'ignore-bad-addresses!' => 'ignore bad addresses' ],
     [],
     [ 'version|V' => 'print the version and exit' ],
     [ 'help' => 'print usage and exit' ],
@@ -100,12 +102,12 @@ if ( my $file = $opt->file ) {
     my $fh = IO::File->new($file);
     while ( my $line = $fh->getline ) {
         chomp($line);
-        push @patterns, $line;
+        push @patterns, validate_cidr($line);
     }
 }
 else {
     my $pattern = shift @ARGV                       or die $usage;
-    push @patterns, $pattern;
+    push @patterns, validate_cidr($pattern);
 }
 
 my $re = make_regexp($opt);
@@ -191,4 +193,21 @@ sub make_regexp {
     $ips .= '(?!\.)' if $opt->exclude_final_dot;
     my $re    = $start . '(' . $ips . ')\b';
     return qr/${re}/;
+}
+
+sub validate_cidr {
+    my ($arg) = @_;
+
+    if ( my $cidr = cidrvalidate($arg) ) {
+        return $cidr;
+    }
+    elsif ( my @cidrs = eval { range2cidr($arg) } ) {
+        return @cidrs;
+    }
+    elsif ( $opt->ignore_bad_addresses ) {
+        return;
+    }
+    else {
+        die "'${arg}' does not look like an IP address, IP address range or network block\n";
+    }
 }

@@ -1,6 +1,11 @@
 Revision history for ipgrep
 
 v0.5.1
+  [Enhancements]
+  - Added --ignore-bad-addresses option, GH#6.
+
+  - Added the ability to handle network ranges, GH#5.
+
   [Tests]
   - Added tests for gzipped files.
 

@@ -20,4 +20,9 @@ script_stdout_is "192.168.0.1 x
 192.168.0.2 x
 ", "matches ips in netblock";
 
+script_runs( [qw( script/ipgrep 192.168.0.2-192.168.0.17 t/data/file1.txt )]);
+
+script_stdout_is "192.168.0.2 x
+", "matches ips in network address range";
+
 done_testing;

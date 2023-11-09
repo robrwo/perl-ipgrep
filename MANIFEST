@@ -17,6 +17,7 @@ t/file.t
 t/files-with-match.t
 t/files-without-match.t
 t/gzip.t
+t/ignore-bad-addresses.t
 t/invert-match.t
 t/label.t
 t/line-number.t
