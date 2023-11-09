@@ -9,6 +9,9 @@ v0.6.0
   [Tests]
   - Added tests for gzipped files.
 
+  [Toolchain]
+  - Updated MANIFEST.SKIP.
+
 v0.5.0    2023-11-08 21:16:30 Europe/London
   [Enhancements]
   - Added --exclude-final-dot option.
