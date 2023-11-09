@@ -1,6 +1,6 @@
 Revision history for ipgrep
 
-v0.5.1
+v0.6.0
   [Enhancements]
   - Added --ignore-bad-addresses option, GH#6.
 

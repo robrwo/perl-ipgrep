@@ -57,7 +57,7 @@ use Net::CIDR qw( cidrvalidate range2cidr );
 use NetAddr::IP;
 use Sub::Quote qw( qsub );
 
-our $VERSION = 'v0.5.1';
+our $VERSION = 'v0.6.0';
 
 my ( $opt, $usage ) = describe_options(
     '%c %o [patterns] [files]',
