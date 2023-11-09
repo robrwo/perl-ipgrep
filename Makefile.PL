@@ -35,7 +35,7 @@ WriteMakefile(
         'IO::Uncompress::Gunzip'    => 0,
         'List::Util'                => '1.33',
         'NetAddr::IP'               => 0,
-        'Net::CIDR'                 => 0.20,
+        'Net::CIDR'                 => '0.20',
         'Sub::Quote'                => '2.003000',
         'warnings'                  => 0,
     },
