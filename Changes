@@ -1,5 +1,9 @@
 Revision history for ipgrep
 
+v0.5.1
+  [Tests]
+  - Added tests for gzipped files.
+
 v0.5.0    2023-11-08 21:16:30 Europe/London
   [Enhancements]
   - Added --exclude-final-dot option.

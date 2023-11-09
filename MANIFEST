@@ -9,12 +9,14 @@ t/01-no-options.t
 t/count.t
 t/data/file1.txt
 t/data/file2.txt
+t/data/file3.txt.gz
 t/data/list.txt
 t/data/rdns.txt
 t/exclude-final-dot.t
 t/file.t
 t/files-with-match.t
 t/files-without-match.t
+t/gzip.t
 t/invert-match.t
 t/label.t
 t/line-number.t
