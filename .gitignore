@@ -6,3 +6,4 @@ MYMETA.*
 ipgrep-v*/
 ipgrep-v*.tar.gz
 *.bak
+*.old
