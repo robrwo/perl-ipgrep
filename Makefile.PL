@@ -30,7 +30,7 @@ WriteMakefile(
     },
     "NAME"      => 'ipgrep',
     "PREREQ_PM" => {
-        'Getopt::Long::Descriptive' => 0,
+        'Getopt::Long::Descriptive' => '0.105',
         'IO::File'                  => 0,
         'IO::Uncompress::Gunzip'    => 0,
         'List::Util'                => '1.33',

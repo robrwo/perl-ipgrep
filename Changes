@@ -1,5 +1,8 @@
 Revision history for ipgrep
 
+  [Bug Fixes]
+  - Specifed minimum version of Getopt::Long::Descriptive.
+
 v0.6.0    2023-11-09 22:07:30 Europe/London
   [Enhancements]
   - Added --ignore-bad-addresses option, GH#6.
