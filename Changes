@@ -1,6 +1,6 @@
 Revision history for ipgrep
 
-v0.6.0
+v0.6.0    2023-11-09 22:07:30 Europe/London
   [Enhancements]
   - Added --ignore-bad-addresses option, GH#6.
 
