@@ -1,6 +1,6 @@
 Revision history for ipgrep
 
-v0.7.0
+v0.7.0    2023-11-10 15:52:30 Europe/London
   [Enhancements]
   - Added --max-count option, GH#10.
 
