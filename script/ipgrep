@@ -49,13 +49,13 @@ This is free software, licensed under The Artistic License 2.0 (GPL Compatible).
 use v5.18;
 use warnings;
 
-use Getopt::Long::Descriptive;
+use Getopt::Long::Descriptive 0.105;
 use IO::File;
 use IO::Uncompress::Gunzip;
-use List::Util qw( any );
-use Net::CIDR  qw( cidrvalidate range2cidr );
+use List::Util 1.33 qw( any );
+use Net::CIDR 0.20 qw( cidrvalidate range2cidr );
 use NetAddr::IP;
-use Sub::Quote qw( qsub );
+use Sub::Quote 2.003000 qw( qsub );
 
 our $VERSION = 'v0.7.0';
 
