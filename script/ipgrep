@@ -53,7 +53,7 @@ use Getopt::Long::Descriptive;
 use IO::File;
 use IO::Uncompress::Gunzip;
 use List::Util qw( any );
-use Net::CIDR qw( cidrvalidate range2cidr );
+use Net::CIDR  qw( cidrvalidate range2cidr );
 use NetAddr::IP;
 use Sub::Quote qw( qsub );
 
@@ -77,19 +77,19 @@ my ( $opt, $usage ) = describe_options(
             ]
         }
     ],
-    [ 'label=s'  => 'display input from stdin as coming from label', { default => '(standard input)' } ],
-    [ 'file|f=s' => 'obtain CIDRs from a file, one per line' ],
-    [ 'only-matching|o' => 'show only nonempty parts of lines that match' ],
-    [ 'quiet|silent|q' => 'do not output anything, exit immediately with zero status if any match is found' ],
-    [ 'exclude-final-dot!' => 'exclude matches with a final dot' ],
+    [ 'label=s'               => 'display input from stdin as coming from label', { default => '(standard input)' } ],
+    [ 'file|f=s'              => 'obtain CIDRs from a file, one per line' ],
+    [ 'only-matching|o'       => 'show only nonempty parts of lines that match' ],
+    [ 'quiet|silent|q'        => 'do not output anything, exit immediately with zero status if any match is found' ],
+    [ 'exclude-final-dot!'    => 'exclude matches with a final dot' ],
     [ 'ignore-bad-addresses!' => 'ignore bad addresses' ],
     [],
     [ 'version|V' => 'print the version and exit' ],
-    [ 'help' => 'print usage and exit' ],
+    [ 'help'      => 'print usage and exit' ],
 
 );
 
-if ($opt->version) {
+if ( $opt->version ) {
     say "iprep ${VERSION}";
     exit 0;
 }
@@ -107,7 +107,7 @@ if ( my $file = $opt->file ) {
     }
 }
 else {
-    my $pattern = shift @ARGV                       or die $usage;
+    my $pattern = shift @ARGV or die $usage;
     push @patterns, validate_cidr($pattern);
 }
 
@@ -128,14 +128,14 @@ unless ( $opt->count ) {
     my $cb_pattern;
     if ( $opt->only_matching ) {
         my $prefix = '""';
-        $prefix = '$_[0]->input_line_number . ":"' if $opt->line_number;
-        $prefix = '$_[1] . ":" . ' . $prefix if $opt->with_filename;
+        $prefix     = '$_[0]->input_line_number . ":"' if $opt->line_number;
+        $prefix     = '$_[1] . ":" . ' . $prefix       if $opt->with_filename;
         $cb_pattern = 'defined($_[3][0]) ? join("\n", map { ' . $prefix . ' . $_ } @{$_[3]}) . "\n" : ""';
     }
     else {
         $cb_pattern = '$_[2]';
         $cb_pattern = '$_[0]->input_line_number . ":" . ' . $cb_pattern if $opt->line_number;
-        $cb_pattern = '$_[1] . ":" . ' . $cb_pattern if $opt->with_filename;
+        $cb_pattern = '$_[1] . ":" . ' . $cb_pattern                    if $opt->with_filename;
     }
     $callback = qsub 'print ' . $cb_pattern;
 }
@@ -148,7 +148,7 @@ if ( $opt->files_with_match || $opt->files_without_match ) {
 elsif ( $opt->count ) {
     my $pattern = '$_[1]';
     $pattern = '$_[0] . ":" . ' . $pattern if $opt->with_filename;
-    $post = qsub 'say ' . $pattern;
+    $post    = qsub 'say ' . $pattern;
 }
 
 if ( $opt->quiet ) {
@@ -157,7 +157,9 @@ if ( $opt->quiet ) {
 
 my $matched = 0;
 
-my $match_fn = $opt->only_matching ? sub { [ grep defined, @_ ] } : sub { any { defined($_) } @_ };
+my $match_fn = $opt->only_matching ? sub { [ grep defined, @_ ] } : sub {
+    any { defined($_) } @_;
+};
 
 for my $file (@files) {
 
@@ -166,8 +168,8 @@ for my $file (@files) {
     my $label = $file eq "-" ? $opt->label : $file;
     my $count = match_file( $opt, $re, $fh, $label, $callback );
     $matched ||= !!$count;
-    exit(0) if $opt->quiet && $matched;
-    next if ($opt->files_with_match && !$count) || ($opt->files_without_match && $count);
+    exit(0)                  if $opt->quiet && $matched;
+    next                     if ( $opt->files_with_match && !$count ) || ( $opt->files_without_match && $count );
     $post->( $file, $count ) if $post;
 
 }
@@ -187,19 +189,19 @@ sub match_file {
         else {
             $count++;
         }
-        last if $opt->files_with_match || $opt->files_without_match;
-        $callback->($fh, $file, $line, $matches) if $callback;
-        last if $opt->max_count && $opt->max_count <= $count;
+        last                                       if $opt->files_with_match || $opt->files_without_match;
+        $callback->( $fh, $file, $line, $matches ) if $callback;
+        last                                       if $opt->max_count && $count >= $opt->max_count;
     }
     return $count;
 }
 
 sub make_regexp {
     my ($opt) = @_;
-    my $ips   = join("|", map { NetAddr::IP->new($_)->re } @patterns );
+    my $ips   = join( "|", map { NetAddr::IP->new($_)->re } @patterns );
     my $start = $opt->match_first_character ? '^' : '\b';
     $ips .= '(?!\.)' if $opt->exclude_final_dot;
-    my $re    = $start . '(' . $ips . ')\b';
+    my $re = $start . '(' . $ips . ')\b';
     return qr/${re}/;
 }
 
