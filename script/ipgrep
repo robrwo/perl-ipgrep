@@ -180,7 +180,13 @@ sub match_file {
     while ( my $line = <$fh> ) {
         my $matches = $match_fn->( $line =~ m/${re}/g );
         next unless !!$matches ne !!$opt->invert_match;
-        $count++;
+        if ( $opt->only_matching && !( $opt->files_with_match || $opt->files_without_match ) ) {
+            $count += scalar(@$matches);
+            splice @$matches, $opt->max_count if $opt->max_count;
+        }
+        else {
+            $count++;
+        }
         last if $opt->files_with_match || $opt->files_without_match;
         $callback->($fh, $file, $line, $matches) if $callback;
         last if $opt->max_count && $opt->max_count <= $count;
