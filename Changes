@@ -4,6 +4,9 @@ v0.6.1
   [Bug Fixes]
   - Specifed minimum version of Getopt::Long::Descriptive.
 
+  [Other]
+  - Renamed some variables to improve code clarity.
+
 v0.6.0    2023-11-09 22:07:30 Europe/London
   [Enhancements]
   - Added --ignore-bad-addresses option, GH#6.

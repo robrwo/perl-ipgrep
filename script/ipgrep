@@ -177,11 +177,11 @@ sub match_file {
     my ( $opt, $re, $fh, $file, $callback ) = @_;
     my $count = 0;
     while ( my $line = <$fh> ) {
-        my $matched = $match_fn->( $line =~ m/${re}/g );
-        next unless !!$matched ne !!$opt->invert_match;
+        my $matches = $match_fn->( $line =~ m/${re}/g );
+        next unless !!$matches ne !!$opt->invert_match;
         $count++;
         last if $opt->files_with_match || $opt->files_without_match;
-        $callback->($fh, $file, $line, $matched) if $callback;
+        $callback->($fh, $file, $line, $matches) if $callback;
     }
     return $count;
 }
