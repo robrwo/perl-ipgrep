@@ -22,6 +22,7 @@ t/invert-match.t
 t/label.t
 t/line-number.t
 t/match-first-character.t
+t/max-count.t
 t/no-filename.t
 t/only-matching.t
 t/quiet.t

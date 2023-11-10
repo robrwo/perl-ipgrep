@@ -1,6 +1,9 @@
 Revision history for ipgrep
 
 v0.6.1
+  [Enhancements]
+  - Added --max-count option, GH#10.
+
   [Bug Fixes]
   - Specifed minimum version of Getopt::Long::Descriptive.
 

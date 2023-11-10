@@ -66,6 +66,7 @@ my ( $opt, $usage ) = describe_options(
     [ 'files-without-match|L'    => 'print the name of each input file from which no output would normally have been printed' ],
     [ 'files-with-match|l'       => 'print the name of each input file from which output would normally have been printed' ],
     [ 'invert-match|v'           => 'invert the sense of matching, to select non-matching lines' ],
+    [ 'max-count|m=i'            => 'Stop  reading a file after NUM matching lines.' ],
     [ 'line-number|n'            => 'prefix each line of output with the line number within its input file' ],
     [ 'match-first-character|1!' => 'match IP address from the first character of the line only' ],
     [
@@ -182,6 +183,7 @@ sub match_file {
         $count++;
         last if $opt->files_with_match || $opt->files_without_match;
         $callback->($fh, $file, $line, $matches) if $callback;
+        last if $opt->max_count && $opt->max_count <= $count;
     }
     return $count;
 }
