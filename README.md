@@ -38,6 +38,6 @@ Robert Rothenberg <rrwo@cpan.org>
 
 # COPYRIGHT AND LICENCE
 
-This software is copyright (c) 2023 by Robert Rothenberg.
+This software is copyright (c) 2023-2024 by Robert Rothenberg.
 
 This is free software, licensed under The Artistic License 2.0 (GPL Compatible).
